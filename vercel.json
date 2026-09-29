@@ -1,8 +1,27 @@
 {
-  "buildCommand": "cd SIH && npm ci && npm run build",
-  "outputDirectory": "SIH/dist",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "sih": {
+      "root": "SIH",
+      "framework": "vite"
+    },
+    "backend": {
+      "root": "backend",
+      "framework": "fastapi"
+    }
+  },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "sih"
+      }
+    }
   ]
 }
